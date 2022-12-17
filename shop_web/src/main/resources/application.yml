@@ -1,0 +1,35 @@
+server:
+  port: 9100
+spring:
+  application:
+    name: shop-web
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.147.128:8848
+  thymeleaf:
+    mode: LEGACYHTML5
+    encoding: UTF-8
+    cache: false
+    prefix: classpath:/templates/
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+logging:
+  level:
+    com.atguigu.ProductFeignClient: DEBUG
+feign:
+  sentinel:
+    enabled: true
+  client:
+    config:
+      default:
+        readTimeout: 30000
+        connectTimeout: 10000
+thread:
+  pool:
+    core-pool-size: 16
+    maxium-pool-size: 32
+    keep-alive-time: 50
+    queue-length: 100
+

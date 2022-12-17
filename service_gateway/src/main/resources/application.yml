@@ -1,0 +1,64 @@
+server:
+  port: 80
+spring:
+  redis:
+    host: 192.168.147.128
+    port: 6389
+  application:
+    name: shop-gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.147.128:8848
+    gateway:
+      discovery:      #是否与服务发现组件进行结合，通过 serviceId(必须设置成大写) 转发到具体的服务实例。默认为false，设为true便开启通过服务中心的自动根据 serviceId 创建路由的功能。
+        locator:      #路由访问方式：http://Gateway_HOST:Gateway_PORT/大写的serviceId/**，其中微服务应用名默认大写访问。
+          enabled: true
+      routes:
+        - id: shop-product
+          uri: lb://shop-product
+          predicates:
+            - Path=/product/** # 路径匹配
+
+        - id: shop-product1
+          uri: lb://shop-product
+          predicates:
+            - Path=/sku/** # 路径匹配
+
+        - id: shop-search
+          uri: lb://shop-search
+          predicates:
+            - Path=/search/** # 路径匹配
+
+        - id: shop-user
+          uri: lb://shop-user
+          predicates:
+            - Path=/user/** #路径匹配
+
+        - id: shop-cart
+          uri: lb://shop-cart
+          predicates:
+            - Path=/cart/**
+
+        - id: shop-order
+          uri: lb://shop-order
+          predicates:
+            - Path=/order/**
+
+        - id: shop-payment
+          uri: lb://shop-payment
+          predicates:
+            - Path=/payment/**
+
+        - id: shop-seckill
+          uri: lb://shop-seckill
+          predicates:
+            - Path=/seckill/**
+
+        - id: shop-web
+          uri: lb://shop-web
+          predicates:
+            - Host=*.gmall.com,127.0.0.1 # 路径匹配
+#            - Host  #配置前端访问路径
+filter:
+  whileFilter: myOrder.html,myCart.html

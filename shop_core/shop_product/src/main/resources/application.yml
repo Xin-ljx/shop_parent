@@ -1,0 +1,76 @@
+server:
+  port: 8000
+
+mybatis-plus:
+  mapper-locations: classpath:com/atguigu/dao/xml/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+spring:
+  application:
+    name: shop-product
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.147.128:8848
+  rabbitmq:
+    host: 192.168.147.128
+    port: 5672
+    username: admin
+    password: 123
+  redis:
+    host: 192.168.147.128
+    port: 6389
+    database: 0
+    timeout: 1800000
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://192.168.147.128:3306/shop_product?characterEncoding=utf-8&useSSL=false
+    username: root
+    password: root
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+
+#  shardingsphere:
+#    datasource:
+#      names:  write-node,read-node1,read-node2
+#      write-node:
+#        type: com.zaxxer.hikari.HikariDataSource
+#        driver-class-name: com.mysql.jdbc.Driver
+#        url: jdbc:mysql://192.168.147.128:3306/shop_product01?characterEncoding=utf-8&useSSL=false
+#        username: root
+#        password: root
+#      read-node1:
+#        type: com.zaxxer.hikari.HikariDataSource
+#        driver-class-name: com.mysql.jdbc.Driver
+#        url: jdbc:mysql://192.168.147.128:3306/shop_product02?characterEncoding=utf-8&useSSL=false
+#        username: root
+#        password: root
+#      read-node2:
+#        type: com.zaxxer.hikari.HikariDataSource
+#        driver-class-name: com.mysql.jdbc.Driver
+#        url: jdbc:mysql://192.168.147.128:3306/shop_product03?characterEncoding=utf-8&useSSL=false
+#        username: root
+#        password: root
+#    #读写分离策略
+#    rules:
+#      readwrite-splitting:
+#        data-sources:
+#          master-node:
+#            type: static
+#            props:
+#              write-data-source-name: write-node
+#              read-data-source-names: read-node1,read-node2
+#            loadBalancers:
+#              read-lb:
+#                type: ROUND_ROBIN
+filename:
+  url: 192.168.147.128:8888
+
+
+minio:
+  endpoint: http://192.168.147.128:9000
+  access-key: enjoy6288
+  secret-key: enjoy6288
+  bucket-name: ljx991220

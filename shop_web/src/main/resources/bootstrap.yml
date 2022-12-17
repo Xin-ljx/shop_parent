@@ -1,0 +1,10 @@
+spring:
+  profiles:
+    active: dev
+  cloud:
+    nacos:
+      config:
+        server-addr: 192.168.147.128:8848
+        file-extension: yaml
+        namespace: b61bb5b46c83f1daee773cfb86470d22
+        group: DEFAULT_GROUP

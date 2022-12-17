@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.dao.TOrder1Mapper">
+    <resultMap id="orderMap" type="com.atguigu.entity.TOrder" autoMapping="true">
+        <id property="id" column="id"></id>
+        <collection property="orderDetailList" ofType="com.atguigu.entity.TOrderDetail" autoMapping="true">
+            <id property="id" column="order_detail_id"></id>
+        </collection>
+    </resultMap>
+    <select id="queryOrderAndDetail" resultType="com.atguigu.entity.TOrder">
+        SELECT a.*,
+               b.id order_detail_id,
+               b.user_id,
+               b.sku_num,
+               b.sku_name,
+               b.sku_price,
+               b.user_id,
+               b.order_id
+        FROM t_order a
+                 LEFT JOIN t_order_detail b ON a.id = b.order_id
+        <where>
+            <if test="userId != null">
+                a.user_id = #{userId}
+            </if>
+<!--            <if test="orderId != null">
+                a.id=#{orderId}
+            </if>-->
+        </where>
+    </select>
+</mapper>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.dao.PlatformPropertyKeyMapper">
+    <resultMap id="platformPropertyMap" type="com.atguigu.entity.PlatformPropertyKey" autoMapping="true">
+        <id property="id" column="id"></id>
+        <collection property="propertyValueList" ofType="com.atguigu.entity.PlatformPropertyValue" autoMapping="true">
+            <id property="id" column="property_value_id"></id>
+        </collection>
+    </resultMap>
+    <select id="getPlatformPropertyByCategoryId" resultMap="platformPropertyMap">
+    SELECT
+    a.id,a.property_key,a.category_id,a.category_level,
+    b.id property_value_id,b.property_value,b.property_key_id
+    FROM shop_product.platform_property_key a
+    inner join shop_product.platform_property_value b on a.id = b.property_key_id
+    <where>
+        <if test="category1Id != null and category1Id != 0">
+            or (a.category_id = #{category1Id} and a.category_level = 1)
+        </if>
+        <if test="category2Id != null and category2Id != 0">
+            or (a.category_id = #{category2Id} and a.category_level = 2)
+        </if>
+        <if test="category3Id != null and category3Id != 0">
+            or (a.category_id = #{category3Id} and a.category_level = 3)
+        </if>
+    </where>
+    </select>
+
+    <select id="getPlatformPropertyBySkuId" resultMap="platformPropertyMap">
+        SELECT
+            a.id,
+            a.property_key,
+            a.category_id,
+            a.category_level,
+            b.id property_value_id,
+            b.property_value,
+            b.property_key_id
+        FROM
+            shop_product.platform_property_key a
+                INNER JOIN shop_product.platform_property_value b ON a.id = b.property_key_id
+                INNER JOIN shop_product.sku_platform_property_value c on c.property_key_id = a.id
+        WHERE
+            c.sku_id = #{skuId}
+    </select>
+</mapper>
